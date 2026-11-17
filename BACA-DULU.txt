@@ -1,0 +1,46 @@
+SIPERKASA - Cara mengirim dan menjalankan di laptop lain
+=========================================================
+
+A. DI LAPTOP ASAL (membuat zip)
+-------------------------------
+Yang HARUS ikut di zip:
+  - folder vendor      (supaya laptop tujuan tidak perlu composer install)
+  - folder public\build (hasil build; jika ragu jalankan: npm run build)
+  - file .env          (atau biarkan laptop tujuan menyalin dari .env.example)
+  - semua folder lain  (app, config, database, resources, routes, storage, dst.)
+
+Yang TIDAK perlu ikut:
+  - folder node_modules (besar dan tidak dipakai saat berjalan)
+  - folder .git
+
+Tips agar zip tidak rusak:
+  - Jangan ekstrak/zip di dalam folder OneDrive atau folder yang sedang dibuka program lain.
+  - Tutup VS Code sebelum membuat zip.
+  - Setelah zip jadi, coba ekstrak sekali ke folder kosong untuk memastikan file
+    vendor\autoload.php dan vendor\symfony\deprecation-contracts\function.php ada.
+
+B. DI LAPTOP TUJUAN (menjalankan)
+---------------------------------
+Dibutuhkan: XAMPP dengan PHP 8.2 atau lebih baru (sudah diuji di PHP 8.2.12)
+            dan koneksi internet (font, ikon, saran lokasi memakai layanan online).
+TIDAK perlu composer install atau npm install.
+
+  1. Ekstrak zip ke folder BARU yang kosong, mis. C:\xampp\htdocs\SIPERKASA
+     (jangan menimpa folder lama yang vendor-nya rusak).
+  2. Buka XAMPP Control Panel, klik Start pada MySQL.
+  3. Klik dua kali PASANG-DAN-JALANKAN.bat
+     (membuat database "siperkasa", tabel, data demo, lalu membuka browser)
+  4. Buka http://localhost:8000
+
+Login panel admin: http://localhost:8000/admin/masuk
+  NIP      : 199001012015011001
+  Password : Admin@12345
+  (akun demo untuk lokal; ganti sebelum dipakai sungguhan)
+
+NIP pegawai demo untuk form peminjaman: 198811042012021001
+
+Jika MySQL di laptop tujuan memakai kata sandi:
+  buka file .env, isi DB_PASSWORD=..., lalu jalankan ulang PASANG-DAN-JALANKAN.bat
+
+Jika terjadi masalah, kirim screenshot jendela hitam dari file .bat
+(tahap [1/5] sampai [5/5] menunjukkan di mana berhentinya).
