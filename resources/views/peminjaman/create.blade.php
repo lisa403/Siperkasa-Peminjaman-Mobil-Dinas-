@@ -177,7 +177,7 @@
         <div class="mx-auto mt-stack-lg grid max-w-3xl grid-cols-1 gap-gutter md:grid-cols-2">
             <div class="flex gap-4 rounded-xl border border-secondary-container bg-secondary-container/30 p-4">
                 <span class="material-symbols-outlined text-3xl text-primary">help_center</span>
-                <div><h4 class="text-label-md">Butuh Bantuan?</h4><p class="text-body-sm text-on-surface-variant">Hubungi bagian administrasi di (0281) 123456 jika mengalami kendala sistem.</p></div>
+                <div><h4 class="text-label-md">Butuh Bantuan?</h4><p class="text-body-sm text-on-surface-variant">Hubungi bagian administrasi di (0281) 891034 jika mengalami kendala sistem.</p></div>
             </div>
             <div class="flex gap-4 rounded-xl border border-primary-fixed bg-primary-fixed/30 p-4">
                 <span class="material-symbols-outlined text-3xl text-primary">policy</span>
