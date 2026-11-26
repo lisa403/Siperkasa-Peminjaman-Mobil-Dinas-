@@ -107,9 +107,14 @@ class BookingController extends Controller
             return 'Kendaraan dijadwalkan perawatan pada tanggal tersebut. Pengajuan tidak dapat disetujui.';
         }
 
-        $clash = $vehicle->bookings()->blocking()->whereKeyNot($booking->id)
-            ->overlappingDates($booking->departs_on, $booking->returns_on)->exists();
+                $clash = Booking::findClash(
+            $vehicle->bookings()->blocking()->whereKeyNot($booking->id),
+            $booking->startsAt(),
+            $booking->endsAt(),
+        );
 
-        return $clash ? 'Kendaraan sudah dipesan pada rentang tanggal tersebut oleh pengajuan lain.' : null;
+        return $clash
+            ? 'Kendaraan sudah dipesan pada '.$clash->scheduleLabel().' oleh pengajuan lain, atau jaraknya kurang dari 1 jam. Pengajuan tidak dapat disetujui.'
+            : null;
     }
 }

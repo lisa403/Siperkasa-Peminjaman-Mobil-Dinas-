@@ -42,10 +42,17 @@ class BookingService
                 ]);
             }
 
-            $conflict = $vehicle->bookings()->blocking()->overlappingDates($departs, $returns)->exists();
-            if ($conflict) {
+            // Time-aware check: the same vehicle can be booked twice on one day as long as the two bookings
+            // are at least Booking::BUFFER_MINUTES (one hour) apart.
+            $start = $departs->copy()->setTimeFromTimeString($data['departs_time']);
+            $end = $returns->copy()->setTimeFromTimeString($data['returns_time']);
+
+            $clash = Booking::findClash($vehicle->bookings()->blocking(), $start, $end);
+            if ($clash) {
                 throw ValidationException::withMessages([
-                    'departs_on' => 'Kendaraan sudah diajukan atau dipesan pada rentang tanggal tersebut. Pilih tanggal lain atau kendaraan lain.',
+                    'departs_on' => 'Kendaraan sudah diajukan atau dipesan pada '.$clash->scheduleLabel().'. '
+                        .'Peminjaman kendaraan yang sama harus berjarak minimal 1 jam dari peminjaman lain. '
+                        .'Pilih jam atau tanggal lain, atau kendaraan lain.',
                 ]);
             }
 

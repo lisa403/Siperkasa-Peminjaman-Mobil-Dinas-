@@ -14,16 +14,15 @@ class Employee extends Model
     /** Fixed list of work units (Bidang / Unit Kerja) offered in the admin form. */
     public const BIDANG_OPTIONS = [
         'Kepala Dinas',
-        'Kelompok Jabatan Fungsional',
+        'Kelompok Jabatan Fungsional dan Pelaksana',
         'Sekretariat',
-        'Sub Koordinator dan Kelompok Jabatan Fungsional',
-        'Sub Bagian Keuangan',
+        'Sub Perencanaan dan Keuangan',
         'Sub Bagian Umum dan Kepegawaian',
-        'Bidang Pembinaan Pendidikan Anak Usia Dini Dan Pendidikan Non Formal',
-        'Bidang Pembinaan Sekolah Dasar',
-        'Bidang Pembinaan Sekolah Menengah Pertama',
-        'Bidang Pembinaan Kebudayaan',
-        'Bidang Pembinaan Ketenagaan',
+        'Bidang Kesehatan Masyarakat',
+        'Bidang Pencegahan dan Pengendalian Penyakit',
+        'Bidang Pelayanan dan Sumber Daya Kesehatan',
+        'Bidang Pengendalian Penduduk, Advokasi, dan Informasi, serta Keluarga Berencana dan Keluarga Sejahtera',
+
     ];
 
     protected $fillable = ['nip', 'name', 'email', 'bidang', 'jabatan', 'pangkat', 'is_active'];

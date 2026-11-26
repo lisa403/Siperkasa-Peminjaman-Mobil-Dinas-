@@ -49,6 +49,36 @@ class Booking extends Model
             ->whereDate('returns_on', '>=', $from->toDateString());
     }
 
+    /** Minimum gap, in minutes, that must separate two bookings of the same vehicle. */
+    public const BUFFER_MINUTES = 60;
+
+    /** Moment the trip starts: departure date + departure time. */
+    public function startsAt(): Carbon
+    {
+        return $this->departs_on->copy()->setTimeFromTimeString($this->departs_time ?: '00:00');
+    }
+
+    /** Moment the vehicle is back: return date + return time. */
+    public function endsAt(): Carbon
+    {
+        return $this->returns_on->copy()->setTimeFromTimeString($this->returns_time ?: '23:59');
+    }
+
+    /**
+     * The first booking in $query that clashes with the slot [$start, $end], or null when the slot is free.
+     * Two bookings clash when they overlap or the gap between them is shorter than BUFFER_MINUTES.
+     */
+    public static function findClash($query, Carbon $start, Carbon $end): ?self
+    {
+        $buffer = self::BUFFER_MINUTES;
+
+        return $query
+            ->overlappingDates($start->copy()->subDay()->startOfDay(), $end->copy()->addDay()->startOfDay())
+            ->get()
+            ->first(fn (self $b) => $start->lt($b->endsAt()->addMinutes($buffer))
+                && $end->copy()->addMinutes($buffer)->gt($b->startsAt()));
+    }
+    
     /** Bookings that still hold their vehicle (pending or approved). */
     public function scopeBlocking(Builder $query): Builder
     {

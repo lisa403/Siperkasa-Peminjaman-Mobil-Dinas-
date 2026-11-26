@@ -34,7 +34,7 @@ class BookingController extends Controller
         $employee = Employee::findActiveByNip($request->validated('nip'));
 
         $booking = $bookings->create($employee, $request->integer('vehicle_id'), $request->safe()->only([
-            'departs_on', 'returns_on', 'destination', 'purpose',
+            'departs_on', 'returns_on', 'departs_time', 'returns_time', 'destination', 'purpose',
         ]));
 
         $request->session()->put('employee_id', $employee->id);
